@@ -1,0 +1,8 @@
+extensions:
+    autocompleteFormControl: Wame\AutocompleteFormControl\FormCategory\DI\AutocompleteFormExtension
+
+webloader:
+    js:
+        admin:
+            files:
+                - %appDir%/../vendor/Wame/AutocompleteFormControl/assets/js.js
