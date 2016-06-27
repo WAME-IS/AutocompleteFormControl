@@ -7,6 +7,6 @@ webloader:
             files:
                 - %appDir%/../vendor/Wame/AutocompleteFormControl/assets/js.js
 
-        frontend:
+        default:
             files:
                 - %appDir%/../vendor/Wame/AutocompleteFormControl/assets/js.js
