@@ -7,6 +7,7 @@ use Nette\Forms\Container;
 use Doctrine\ORM\PersistentCollection;
 use Kdyby\Doctrine\Collections\ReadOnlyCollectionWrapper;
 
+
 class AutocompleteFormControl extends BaseControl
 {
 	/** @var bool */
@@ -20,22 +21,23 @@ class AutocompleteFormControl extends BaseControl
     
     /** @var array */
     private $options;
-    
-    /** @var string */
-    private $autocompleteValue;
-    
-    /** @var string */
-    private $defaultValue;
   
     
-	public function __construct($label = null, $source = null, array $config = []) 
+	public function __construct($label, array $config = []) 
     {
 		parent::__construct($label);
 
         $this->labelName = $label;
-        $this->source = $source;
         $this->options = $config;
 	}
+ 
+    
+    public function setSource($source)
+    {
+        $this->source = $source;
+        
+        return $this;
+    }
  
     
     /**
@@ -53,7 +55,27 @@ class AutocompleteFormControl extends BaseControl
         return $this;
     }
 	
+
+    public function setColumns($columns)
+    {
+        if (!is_array($columns)) {
+            $columns = [$columns];
+        }
+        
+        $this->options['columns'] = $columns;
+        
+        return $this;
+    }
+ 
     
+    public function setSelect($select)
+    {
+        $this->options['select'] = $select;
+        
+        return $this;
+    }
+    
+   
     /**
      * Set minimum length
      * 
@@ -139,36 +161,20 @@ class AutocompleteFormControl extends BaseControl
     
 	
     /**
-     * Set CSS class
-     * 
-     * @param string $class
-     * @return \Wame\AutocompleteFormControl\Controls\AutocompleteFormControl
-     */
-    public function setClass(array $class)
-    {
-        $this->options['class'] = $class;
-        
-        return $this;
-    }
-    
-	
-    /**
      * Set default value
      * 
      * @param mixed $value
      * @return \Wame\AutocompleteFormControl\Controls\AutocompleteFormControl
      */
-    public function setValue($value)
+    public function setDefaultValue($value)
     {
-        if (!is_null($value)) {
-            if (is_array($value) || $value instanceof ReadOnlyCollectionWrapper || $value instanceof PersistentCollection) {
-                $this->autocompleteValue = $this->prepareValue($value);
-            } else {
-                $this->autocompleteValue = $value;
-            }
+        if (is_array($value) || $value instanceof ReadOnlyCollectionWrapper || $value instanceof PersistentCollection) {
+            $value = $this->prepareValue($value);
         }
-        
-        $this->defaultValue = $this->autocompleteValue;
+
+		$this->setValue($value);
+		
+		return $this;
     }
     
     
@@ -205,21 +211,18 @@ class AutocompleteFormControl extends BaseControl
      */
     public function getControl()
 	{
-		parent::getControl();
+		$control = parent::getControl();
 
 		$this->setOption('rendered', true);
 
-		$control = clone $this->control;
+        $class = [isset($this->options['class']) ? $this->options['class'] : 'autocomplete' . ' form-control'];
 
-        return $control->addAttributes([
-            'id' => $this->getHtmlId(),
-            'type' => 'text',
-            'name' => $this->getHtmlName(),
-			'class' => array(isset($this->options['class']) ? $this->options['class'] : 'autocomplete' . ' form-control'),
-			'data-source' => $this->source,
-			'data-options' => $this->options,
-            'value' => $this->defaultValue
-        ]);	
+        $control->setClass($class)
+                ->data('source', $this->source)
+                ->data('options', $this->options)
+                ->setValue($this->getValue());
+        
+        return $control;
 	}
 
 	
@@ -234,9 +237,9 @@ class AutocompleteFormControl extends BaseControl
 		$class = function_exists('get_called_class') ? get_called_class() : __CLASS__;
 		
 		Container::extensionMethod(
-			$method, function (Container $container, $name, $label = null, $source = null, $options = null) use ($config, $class) 
+			$method, function (Container $container, $name, $label = null, $options = null) use ($config, $class) 
             {
-				$component[$name] = new $class($label, $source, is_array($options) ? array_replace($config, $options) : $config);
+				$component[$name] = new $class($label, is_array($options) ? array_replace($config, $options) : $config);
 				
 				$container->addComponent($component[$name], $name);
                 
