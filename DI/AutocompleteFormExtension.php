@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\AutocompleteFormControl\FormCategory\DI;
+namespace Wame\AutocompleteFormControl\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;

@@ -1,5 +1,5 @@
 extensions:
-    autocompleteFormControl: Wame\AutocompleteFormControl\FormCategory\DI\AutocompleteFormExtension
+    autocompleteFormControl: Wame\AutocompleteFormControl\DI\AutocompleteFormExtension
 
 webloader:
     js:
