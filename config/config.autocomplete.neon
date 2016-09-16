@@ -5,7 +5,9 @@ webloader:
     js:
         admin:
             files:
-                - %appDir%/../vendor/wame/AutocompleteFormControl/assets/js.js
+#                - %appDir%/../vendor/wame/AutocompleteFormControl/assets/js.js
+                - %appDir%/../vendor/wame/AutocompleteFormControl/assets/autocomplete.js
+                - %appDir%/../vendor/wame/AutocompleteFormControl/assets/main.js
 
         default:
             files:
