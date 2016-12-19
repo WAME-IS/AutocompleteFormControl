@@ -13,12 +13,17 @@
             var $obj = $(this);
 
             $obj.autocomplete({
+                appendTo: $obj.closest('div'),
                 source: function( request, response ) {
                     var phrase = request.term;
                     var source = options.source || $obj.data('source');
                     var dataOptions = $obj.data('options');
                     var columns = options.columns || dataOptions.columns;
                     var select = options.select || dataOptions.select;
+                    
+                    if ($obj.closest('.with-loader').length) {
+                        $obj.closest('.with-loader').addClass('active');
+                    }
 
                     $.ajax({
                         url: source,
@@ -42,6 +47,11 @@
                                         value: item.id
                                     };
                                 }));
+                            }
+                        },
+                        complete: function() {
+                            if ($obj.closest('.with-loader.active').length) {
+                                $obj.closest('.with-loader').removeClass('active');
                             }
                         }
                     });
@@ -67,7 +77,7 @@
 
                 // TODO: oprav lukas!
                 $(this).closest('.autocomplete-value').remove();
-                $obj.val('').show();
+                $obj.val('').show().focus();
             });
         });
     };
