@@ -11,8 +11,11 @@
         
         return this.each(function() {
             var $obj = $(this);
+            console.log($.ui.autocomplete);
+            
+            $.widget.bridge('uiautocomplete', $.ui.autocomplete);
 
-            $obj.autocomplete({
+            $obj.uiautocomplete({
                 appendTo: $obj.closest('div'),
                 source: function( request, response ) {
                     var phrase = request.term;
