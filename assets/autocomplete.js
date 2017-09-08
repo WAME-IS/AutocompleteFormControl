@@ -4,14 +4,15 @@
             source: null,
             columns: null,
             select: null,
-            minLength: 3
+            minLength: 3,
+            fieldValue: 'id',
+            fieldLabel: 'title',
         };
       
         var options = $.extend(defaultOptions, options);
         
         return this.each(function() {
             var $obj = $(this);
-            console.log($.ui.autocomplete);
             
             $.widget.bridge('uiautocomplete', $.ui.autocomplete);
 
@@ -23,7 +24,9 @@
                     var dataOptions = $obj.data('options');
                     var columns = options.columns || dataOptions.columns;
                     var select = options.select || dataOptions.select;
-                    
+                    var fieldValue = dataOptions.fieldValue ? dataOptions.fieldValue : options.fieldValue;
+                    var fieldLabel = dataOptions.fieldLabel ? dataOptions.fieldLabel : options.fieldLabel;
+
                     if ($obj.closest('.with-loader').length) {
                         $obj.closest('.with-loader').addClass('active');
                     }
@@ -46,8 +49,8 @@
                             } else {
                                 response($.map(res, function(item) {
                                     return {
-                                        label: item.title,
-                                        value: item.id
+                                        label: item[fieldLabel],
+                                        value: item[fieldValue]
                                     };
                                 }));
                             }
@@ -78,9 +81,10 @@
             $(document).on('click', '.autocomplete-remove', function(e) {
                 e.preventDefault();
 
-                // TODO: oprav lukas!
-                $(this).closest('.autocomplete-value').remove();
-                $obj.val('').show().focus();
+                if ($obj.data('source')) {
+                    $obj.val('').show().focus();
+                    $(this).parents('.autocomplete-value').remove();
+                }
             });
         });
     };

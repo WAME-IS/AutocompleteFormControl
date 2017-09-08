@@ -15,7 +15,10 @@ class AutocompleteFormControl extends BaseControl
 
     /** @var string */
     private $labelName;
-    
+
+    /** @var mixed */
+    private $defaultLabel;
+
     /** @var string */
     private $source;
     
@@ -30,8 +33,15 @@ class AutocompleteFormControl extends BaseControl
         $this->labelName = $label;
         $this->options = $config;
 	}
- 
-    
+
+
+    /**
+     * Set API route
+     *
+     * @param string $source
+     *
+     * @return $this
+     */
     public function setSource($source)
     {
         $this->source = $source;
@@ -176,7 +186,33 @@ class AutocompleteFormControl extends BaseControl
 		
 		return $this;
     }
-    
+
+
+    /**
+     * Set default label
+     *
+     * @param mixed $label
+     *
+     * @return $this
+     */
+    public function setDefaultLabel($label)
+    {
+        $this->defaultLabel = $label;
+
+        return $this;
+    }
+
+
+    /**
+     * Get default label
+     * 
+     * @return mixed
+     */
+    public function getDefaultLabel()
+    {
+        return $this->defaultLabel;
+    }
+
     
     /**
      * Prepare value
