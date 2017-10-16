@@ -11,4 +11,5 @@ webloader:
         default:
             files:
                 - %appDir%/../vendor/wame/AutocompleteFormControl/assets/autocomplete.js
+                - %appDir%/../vendor/wame/AutocompleteFormControl/assets/jquery.autocomplete.select2.js
                 - %appDir%/../vendor/wame/AutocompleteFormControl/assets/main.js
