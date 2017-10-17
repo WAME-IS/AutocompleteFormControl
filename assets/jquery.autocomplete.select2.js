@@ -42,14 +42,12 @@
                    delay: 250,
                    clear: true,
                    data: function (params) {
-                       console.log(params);
-
                        var query = {
                            columns: dataOptions.columns,
                            phrase: params.term,
                            select: dataOptions.select,
                            limit: pluginOptions.limit,
-                           offset: params.page * pluginOptions.limit
+                           offset: (params.page * pluginOptions.limit) - pluginOptions.limit
                        };
                        
                        return query;
@@ -67,7 +65,7 @@
                        params.page = params.page || 1;
                        
                        var pagination = {
-                           "more": (params.page * 2) < data.results
+                           "more": (params.page * pluginOptions.limit) < data.results
                        };
                        
                        return {
