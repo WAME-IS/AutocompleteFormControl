@@ -31,6 +31,15 @@
             var pluginOptions = this.options;
             var dataOptions = elm.data( "options" );
             
+            
+            // Set the value, creating a new option if necessary
+            if (elm.attr('value').length) {
+                // Create a DOM Option and pre-select by default
+                var newOption = new Option(elm.attr('value'), elm.attr('value'), true, true);
+                // Append it to the select
+                elm.append(newOption).trigger('change');
+            }
+            
             elm.select2({
                 ajax: {
                    url: function (params) {
