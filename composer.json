@@ -1,5 +1,5 @@
 {
-    "name": "wame/AutocompleteFormControl",
+    "name": "wameis/AutocompleteFormControl",
     "version": "0.0.1",
     "description": "CMS WAME admin",
     "homepage": "http://wame.sk/cms-wame-admin",
@@ -15,8 +15,8 @@
     ],
     "config": { "secure-http": false },
     "require": {
-        "wame/Core": ">=0.0.1",
-        "wame/RestApiModule": ">=0.0.1"
+        "wameis/Core": ">=0.0.1",
+        "wameis/RestApiModule": ">=0.0.1"
     },
     "autoload": {
         "classmap": [
